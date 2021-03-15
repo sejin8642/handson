@@ -20,7 +20,7 @@ Please check out https://github.com/ageron/handson-ml2 for example datasets.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Tensorflow](https://www.tensorflow.org) - The python neural network  API used
 
 ## Contributing
 
