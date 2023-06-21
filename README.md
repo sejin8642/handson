@@ -41,7 +41,13 @@ Please check out https://github.com/ageron/handson-ml2 for example datasets.
 
 ## Built With
 
-* [Tensorflow](https://www.tensorflow.org) - The python neural network  API used
+* [Python](https://www.python.org) - The programming language used for machine learning.
+* [NumPy](https://numpy.org) - A library for numerical computing and arrays.
+* [scikit-learn](https://scikit-learn.org) - A machine learning library for various tasks.
+* [TensorFlow](https://www.tensorflow.org) - An open-source framework for deep learning.
+* [Pandas](https://pandas.pydata.org) - A library for data manipulation and analysis.
+* [Matplotlib](https://matplotlib.org) - A plotting library for data visualization.
+* [Jupyter Notebook](https://jupyter.org) - An interactive environment for coding and documentation.
 
 ## Contributing
 
