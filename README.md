@@ -32,8 +32,7 @@ To study machine learning using scikit-learn and TensorFlow, you will need the f
 8. Working PC (linux OS preferred) such as Ubuntu OS PC. For other platforms, please consult other sources.
 
 ### Installing
-
-Anaconda is all you need to install for the first part of the book.
+I recommend using the package manager called Anaconda to install all the required Python packages. Anaconda is a powerful package manager and distribution platform for Python and other programming languages. It simplifies the installation and management of software packages required for machine learning, such as NumPy, scikit-learn, TensorFlow, Pandas, Matplotlib, and Jupyter Notebook. With Anaconda, you can create isolated environments to manage different project dependencies, ensuring compatibility and reproducibility. By using the Anaconda command-line interface or the Anaconda Navigator graphical interface, you can easily install, update, and manage all the required software packages, making it effortless to set up your machine learning environment and get started with your projects. Please do your own research about Anaconda to install all the required packages.
 
 ## Example datasets 
 
