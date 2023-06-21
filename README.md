@@ -22,21 +22,14 @@ Please check out the website https://github.com/ageron/handson-ml2 to learn more
 ### Prerequisites
 To study machine learning using scikit-learn and TensorFlow, you will need the following software packages:
 
-item 1 Python: The programming language used for machine learning.
-
-item 2 NumPy: A library for numerical computing and arrays.
-
-item 3 scikit-learn: A machine learning library for various tasks.
-
-item 4 TensorFlow: An open-source framework for deep learning.
-
-item 5 Pandas: A library for data manipulation and analysis.
-
-item 6 Matplotlib: A plotting library for data visualization.
-
-item 7 Jupyter Notebook: An interactive environment for coding and documentation.
-
-item 8 Working PC (linux OS preferred) such as Ubuntu OS PC. For other platforms, please consult other sources.
+1. Python: The programming language used for machine learning.
+2. NumPy: A library for numerical computing and arrays.
+3. scikit-learn: A machine learning library for various tasks.
+4. TensorFlow: An open-source framework for deep learning.
+5. Pandas: A library for data manipulation and analysis.
+6. Matplotlib: A plotting library for data visualization.
+7. Jupyter Notebook: An interactive environment for coding and documentation.
+8. Working PC (linux OS preferred) such as Ubuntu OS PC. For other platforms, please consult other sources.
 
 ### Installing
 
