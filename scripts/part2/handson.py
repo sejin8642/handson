@@ -151,7 +151,7 @@ def Filepaths():
     for chapter 13
     """
     # get a list of 20 csv files in housing directory
-    p = Path.home()/'handson'/'housing'
+    p = Path(__file__).resolve().parent
     filepaths = list(p.glob('**/data*'))
     
     # change the PosixPath format to string format for tf to accept
