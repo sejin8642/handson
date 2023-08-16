@@ -1,6 +1,6 @@
 # Hands-on Machine Learning 
 
-Welcome to the collection of complimentary codes and scripts that accompany the machine learning textbook by Aurelien Geron [link](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/) . These resources have been thoughtfully prepared to complement the theoretical concepts discussed in the book and provide practical implementations.
+This is the collection of complimentary codes and scripts that accompany the machine learning textbook by Aurelien Geron [link](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/) . These resources have been thoughtfully prepared to complement the theoretical concepts discussed in the book and provide practical implementations.
 
 The codes provided in this collection closely align with the examples and exercises presented in the textbook. While most of the code snippets are derived from the book, some have been modified to offer alternative approaches, enhance clarity, or showcase advanced variations of the algorithms.
 
