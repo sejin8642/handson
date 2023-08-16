@@ -4,7 +4,7 @@ This is the collection of complimentary codes and scripts that accompany the mac
 
 The codes provided in this collection closely align with the examples and exercises presented in the textbook. While most of the code snippets are derived from the book, some have been modified to offer alternative approaches, enhance clarity, or showcase advanced variations of the algorithms.
 
-These codes aim to serve as humble companions to the textbook, offering readers an opportunity to deepen their understanding through practical application. Each code snippet is accompanied by detailed comments and explanations, providing step-by-step guidance for readers to follow along.
+These codes aim to serve as humble companions to the textbook, offering readers an opportunity to deepen their understanding through practical application. Even though each code snippet is accompanied by comments and explanations, providing step-by-step guidance for readers to follow along, the reader still needs to activately think through the concepts in order to learn.
 
 ## Getting Started
 
