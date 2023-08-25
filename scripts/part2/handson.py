@@ -603,7 +603,8 @@ def seq2seq_dataset(
     
     # create sequences input and output of data
     for ind in range(3):
-        ds = to_windows(tf.data.Dataset.from_tensor_slices(mulvar[ind]), ahead + 1)
+        numeric_features = mulvar[ind].to_numpy().astype(np.float32)
+        ds = to_windows(tf.data.Dataset.from_tensor_slices(numeric_features), ahead + 1)
         ds = to_windows(ds, seq_length).map(lambda S: (S[:, 0], S[:, 1:, 1]))
         if ind == 0:
             ds = ds.shuffle(8*batch_size, seed=42)
