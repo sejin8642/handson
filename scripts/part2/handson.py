@@ -23,6 +23,7 @@ from sklearn.datasets import fetch_openml
 
 import tensorflow as tf
 from tensorflow import keras
+import tensorflow_datasets as tfds
     
 class TOC:
     def __init__(self):
@@ -453,12 +454,13 @@ def rail_train_data():
     # predict the outcome based on the previous 56 days data (8 weeks)
     seq_length = 56
 
+    batch_size = 32 # adjust batch size
     # shuffled train dataset in batch of 32
     train_ds = tf.keras.utils.timeseries_dataset_from_array(
         rail_train.to_numpy(),
         targets=rail_train[seq_length:],
         sequence_length=seq_length,
-        batch_size=32,
+        batch_size=batch_size,
         shuffle=True,
         seed=42
     )
@@ -468,7 +470,7 @@ def rail_train_data():
         rail_valid.to_numpy(),
         targets=rail_valid[seq_length:],
         sequence_length=seq_length,
-        batch_size=32
+        batch_size=batch_size
     )
     
     # test dataset in batch of 32
@@ -476,7 +478,7 @@ def rail_train_data():
         rail_test.to_numpy(),
         targets=rail_valid[seq_length:],
         sequence_length=seq_length,
-        batch_size=32
+        batch_size=batch_size
     )
     
     return train_ds, valid_ds, test_ds
@@ -647,3 +649,39 @@ def cifar_10():
     y_test = y[55000:]
     
     return X_train, y_train, X_valid, y_valid, X_test, y_test
+
+def mnist_TF(batch_size=128):
+    """
+    returns mnist TF dataset (as oppossed to numpy array). The data is 28 by 28 greyscale images and
+    labels of integer between 0 and 9. No validation dataset is returned, but only train and test sets
+
+    returns
+    -------
+    ds_train: TF dataset
+        28 x 28 greyscale images of TF dataset as well as labels of integer between 0 and 9.
+        The dataset contains 469 batches of data, and each batch contains 128 data. Thus 
+        the total elements of dataset is 128 * 469 = 60032     
+    ds_test: TF dataset
+        Same as ds_train but for test set
+    """
+    # fetch mnist data from tfds
+    (ds_train, ds_test), ds_info = tfds.load(
+        "mnist",
+        split=["train", "test"],
+        shuffle_files=True,
+        as_supervised=True,
+        with_info=True,)
+
+    # normalize function applied to images
+    normalize_img = lambda image, label: (tf.cast(image, tf.float32) / 255.0, label)
+
+    # data preparation
+    ds_train = ds_train.map(normalize_img, num_parallel_calls=tf.data.AUTOTUNE)
+    ds_train = ds_train.cache()
+    ds_train = ds_train.shuffle(ds_info.splits["train"].num_examples)
+    ds_train = ds_train.batch(batch_size).prefetch(tf.data.AUTOTUNE)
+
+    ds_test = ds_test.map(normalize_img, num_parallel_calls=tf.data.AUTOTUNE)
+    ds_test = ds_test.batch(batch_size).prefetch(tf.data.AUTOTUNE) 
+
+    return ds_train, ds_test
