@@ -675,13 +675,24 @@ def mnist_TF(batch_size=128):
     # normalize function applied to images
     normalize_img = lambda image, label: (tf.cast(image, tf.float32) / 255.0, label)
 
-    # data preparation
+    # train and test dataset preparation
     ds_train = ds_train.map(normalize_img, num_parallel_calls=tf.data.AUTOTUNE)
     ds_train = ds_train.cache()
     ds_train = ds_train.shuffle(ds_info.splits["train"].num_examples)
-    ds_train = ds_train.batch(batch_size).prefetch(tf.data.AUTOTUNE)
+    ds_train = ds_train.batch(batch_size)    
 
     ds_test = ds_test.map(normalize_img, num_parallel_calls=tf.data.AUTOTUNE)
-    ds_test = ds_test.batch(batch_size).prefetch(tf.data.AUTOTUNE) 
+    ds_test = ds_test.batch(batch_size)
+
+    # truncate dataset so that the number of batches = pow(2, N) 
+    num_batch = ds_train.cardinality().numpy()
+    exponent = np.floor(np.log2(num_batch))
+    num_batch = int(np.power(2, exponent))
+    ds_train = ds_train.take(num_batch).prefetch(tf.data.AUTOTUNE)
+
+    num_batch = ds_test.cardinality().numpy()
+    exponent = np.floor(np.log2(num_batch))
+    num_batch = int(np.power(2, exponent))
+    ds_test = ds_test.take(num_batch).prefetch(tf.data.AUTOTUNE)
 
     return ds_train, ds_test
