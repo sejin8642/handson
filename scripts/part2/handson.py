@@ -659,8 +659,8 @@ def mnist_TF(batch_size=128):
     -------
     ds_train: TF dataset
         28 x 28 greyscale images of TF dataset as well as labels of integer between 0 and 9.
-        The dataset contains 469 batches of data, and each batch contains 128 data. Thus 
-        the total elements of dataset is 128 * 469 = 60032     
+        By default, the dataset contains 469 batches of data with given 128 batch size. 
+        Thus the total elements of dataset is 128 * 469 = 60032     
     ds_test: TF dataset
         Same as ds_train but for test set
     """
@@ -696,3 +696,49 @@ def mnist_TF(batch_size=128):
     ds_test = ds_test.take(num_batch).prefetch(tf.data.AUTOTUNE)
 
     return ds_train, ds_test
+
+def fashion_mnist(batch_size=64):
+    """
+    returns fashion mnist TF dataset (as oppossed to numpy array). The data is 28 by 28 greyscale 
+    images and labels of integer between 0 and 9. No validation dataset is returned, but 
+    only train and test sets
+
+    returns
+    -------
+    train_dataset: TF dataset
+        28 x 28 greyscale images of TF dataset as well as labels of integer between 0 and 9.
+        By default, the dataset contains 512 batches of data, and each batch contains 164 data. 
+        Thus, the total elements of dataset is 512 * 64 = 32768     
+    test_dataset: TF dataset
+        Same as train_dataset but for test set
+    """
+    fashion_mnist = tf.keras.datasets.fashion_mnist
+
+    (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
+
+    # Add a dimension to the array -> new shape == (28, 28, 1)
+    train_images = train_images[..., None]
+    test_images = test_images[..., None]
+
+    # Scale the images to the [0, 1] range.
+    train_images = train_images / np.float32(255)
+    test_images = test_images / np.float32(255)
+
+    # get the number of data as powers of 2
+    num_data = train_images.shape[0]
+    exponent = np.floor(np.log2(num_data))
+    num_data = int(np.power(2, exponent))
+
+    # reduce the number of data to num_data
+    train_images = train_images[:num_data]
+    train_labels = train_labels[:num_data]
+    test_images = test_images[:num_data]
+    test_labels = test_labels[:num_data]
+
+    # obtain tf.data.Dataset
+    train_dataset = tf.data.Dataset.from_tensor_slices((train_images, train_labels))
+    train_dataset = train_dataset.shuffle(num_data).batch(batch_size)
+    test_dataset = tf.data.Dataset.from_tensor_slices((test_images, test_labels))
+    test_dataset = test_dataset.batch(batch_size)
+
+    return train_dataset, test_dataset
