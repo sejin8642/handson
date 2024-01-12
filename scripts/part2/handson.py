@@ -742,3 +742,64 @@ def fashion_mnist(batch_size=64):
     test_dataset = test_dataset.batch(batch_size)
 
     return train_dataset, test_dataset
+
+def data_from_generator(generator, num_val_power, batch_size_power):
+    """
+    this function returns train and validataion dataset based on input generator. The generator
+    must continue to output the data indefinitely as data_from_generator takes care of the size
+    of the final output dataset. The generator also must return both target and label data, and
+    you must also provide a power to set number_of_validation_dataset = 2**power as well asl
+    power for batch size 2**power 
+
+    parameter
+    --------
+    generator: generator
+        generator to yield data
+    num_val_power: integer
+        integer power to set number of validation dataset to be 2**num_val_power
+    batch_size_power: integer
+        integer power to set number of batch size to be 2**batch_size_power
+
+    return
+    ------
+    train dataset: TF dataset
+        train dataset
+    validattion dataset: TF dataset
+        validation dataset
+    """
+    assert_info = "batch_size_power is greater than num_val_power"
+    assert batch_size_power < num_val_power, assert_info
+
+    # number of validation+train dataset and sample data, batch size
+    num_val = 2**num_val_power
+    num_tra = 8*num_val
+    sample_target, sample_label = next(iter(generator))
+    batch_size = 2**batch_size_power
+
+    # shapes for output tensors
+    train_target_shape = (num_tra, *sample_target.shape)
+    train_label_shape = (num_tra, *sample_label.shape)
+    valid_target_shape = (num_val, *sample_target.shape)
+    valid_label_shape = (num_val, *sample_label.shape)
+
+    # preallocate output tensors
+    target_tra = np.zeros(train_target_shape, dtype=sample_target.dtype)
+    label_tra = np.zeros(train_label_shape, dtype=sample_label.dtype)
+    target_val = np.zeros(valid_target_shape, dtype=sample_target.dtype)
+    label_val = np.zeros(valid_label_shape, dtype=sample_label.dtype)
+
+    # target dataset
+    for index, data in zip(range(num_tra), generator):
+        target_tra[index], label_tra[index] = data
+        
+    # validation dataset
+    for index, data in zip(range(num_val), generator):
+        target_val[index], label_val[index] = data
+
+    # obtain tf.data.Dataset
+    train_dataset = tf.data.Dataset.from_tensor_slices((train_images, label_tra))
+    train_dataset = train_dataset.batch(batch_size)
+    valid_dataset = tf.data.Dataset.from_tensor_slices((target_val, label_val))
+    valid_dataset = test_dataset.batch(batch_size)
+
+    return train_dataset, valid_dataset
